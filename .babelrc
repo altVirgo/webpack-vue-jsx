@@ -1,0 +1,19 @@
+{
+    "presets": [
+        "env"
+    ],
+    "plugins": [
+        "jsx-v-model",
+        "transform-vue-jsx"
+    ],
+    "env": {
+        "development": {
+            "plugins": [
+                [
+                    "transform-vue-jsx",
+                    "jsx-v-model"
+                ]
+            ]
+        }
+    }
+}

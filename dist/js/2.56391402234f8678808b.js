@@ -1,0 +1,10 @@
+/*! 版权所有，翻版必究 */
+(window.webpackJsonp=window.webpackJsonp||[]).push([[2],{"./src/app/components/dashboard/children-three/children-three.jsx":
+/*!************************************************************************!*\
+  !*** ./src/app/components/dashboard/children-three/children-three.jsx ***!
+  \************************************************************************/
+/*! no static exports found */function(module,exports,__webpack_require__){"use strict";eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n    value: true\n});\n\nvar _childrenThree = __webpack_require__(/*! ./children-three.less */ \"./src/app/components/dashboard/children-three/children-three.less\");\n\nvar _childrenThree2 = _interopRequireDefault(_childrenThree);\n\nfunction _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }\n\nexports.default = {\n    name: 'ChildrenThree',\n    data: function data() {\n        return {\n            text: '我是三儿子'\n        };\n    },\n    render: function render(h) {\n        return h(\n            'div',\n            {\n                attrs: { className: _childrenThree2.default.root }\n            },\n            [h('div', [this.text])]\n        );\n    }\n};\n\n//# sourceURL=webpack:///./src/app/components/dashboard/children-three/children-three.jsx?")},"./src/app/components/dashboard/children-three/children-three.less":
+/*!*************************************************************************!*\
+  !*** ./src/app/components/dashboard/children-three/children-three.less ***!
+  \*************************************************************************/
+/*! no static exports found */function(module,exports){eval("// removed by extract-text-webpack-plugin\n\n//# sourceURL=webpack:///./src/app/components/dashboard/children-three/children-three.less?")}}]);
