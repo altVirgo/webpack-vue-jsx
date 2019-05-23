@@ -6,6 +6,9 @@ import App from './app/app.jsx';
 Vue.config.productionTip = false;
 Vue.use(ElementUI);
 
+import axios from "axios";
+Vue.prototype.axios = axios;
+
 new Vue({
     el: '#app',
     components: { App },

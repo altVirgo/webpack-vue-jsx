@@ -30,103 +30,106 @@ module.exports = {
     },
     resolve: {
         alias: {
-            'vue': 'vue/dist/vue.js',
+            'vue': 'vue/dist/vue.js',  // 如果在vue被分离打包到dll文件夹中，路径应与webpack.dll.config.js中的entry.vendors的值保持一致，否则仍然会被打包进bundle中
             '@src': path.resolve(__dirname, 'src'),
             '@node_modules': path.resolve(__dirname, 'node_modules'),
             '@component': path.resolve(__dirname, 'src/app/components'),
             '@static': path.resolve(__dirname, 'static')
         }
     },
+    // externals:防止将某些 import 的包(package)打包到 bundle 中，而是在运行时(runtime)再去从外部获取这些扩展依赖
+    // 使用dll时,有包冲突时，dll文件里的包会失效，import的包仍然会被打进bundle中
     externals: {
-        'vue': 'Vue',
-        'vue-router': 'VueRouter',
-        'element-ui': 'ELEMENT',
+        // 'vue': 'Vue',
+        // 'vue-router': 'VueRouter',
+        // 'element-ui': 'ELEMENT',
         'axios': 'axios',
-        'jquery': 'window.jQuery'
+        // 'jquery': 'window.jQuery'
     },
     module: {
-        rules: [{
-            test: /\.(js|vue|jsx)$/,
-            exclude: /node_modules/,
-            loader: 'eslint-loader',
-            options: {
-                formatter: require('eslint-friendly-formatter')
+        rules: [
+            {
+                test: /\.(js|vue|jsx)$/,
+                exclude: /node_modules/,
+                loader: 'eslint-loader',
+                options: {
+                    formatter: require('eslint-friendly-formatter')
+                },
+                enforce: 'pre'
             },
-            enforce: 'pre'
-        },
-        {
-            test: /(\.jsx|\.js)$/,
-            loader: 'babel-loader',
-            exclude: /(node_modules|bower_components)/
-        },
-        {
-            test: /\.css$/,
-            use: ExtractTextWebpackPlugin.extract({
-                fallback: 'style-loader',
-                use: [{
-                    loader: 'css-loader',
-                    options: {
-                        modules: true, // 指定启用css modules
-                        localIdentName: '[name]__[local]--[hash:base64:5]' // 指定css的类名格式
-                    }
-                }]
-            })
-            // use:  [
-            //     {
-            //         loader: 'style-loader'
-            //     },
-            //     {
-            //         loader: 'css-loader',
-            //         options: {
-            //             modules: true, // 指定启用css modules
-            //             localIdentName: '[name]__[local]--[hash:base64:5]' // 指定css的类名格式
-            //         }
-            //     }
-            // ]
-        },
-        {
-            test: /\.less$/,
-            use: ExtractTextWebpackPlugin.extract({
-                fallback: 'style-loader',
-                use: [{
-                    loader: 'css-loader',
-                    options: {
-                        modules: true, // 指定启用css modules
-                        localIdentName: '[name]__[local]--[hash:base64:5]' // 指定css的类名格式
-                    }
-                }, {
-                    loader: 'less-loader',
-                    options: {
-                        modules: true, // 指定启用css modules
-                        localIdentName: '[name]__[local]--[hash:base64:5]' // 指定css的类名格式 ，只针对最外层的选择器
-                    }
-                }]
-            })
-        },
-        {
-            test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
-            loader: 'url-loader',
-            options: {
-                limit: 10000,
-                name: 'img/[name].[hash:7].[ext]'
+            {
+                test: /(\.jsx|\.js)$/,
+                loader: 'babel-loader',
+                exclude: /(node_modules|bower_components)/
+            },
+            {
+                test: /\.css$/,
+                use: ExtractTextWebpackPlugin.extract({
+                    fallback: 'style-loader',
+                    use: [{
+                        loader: 'css-loader',
+                        options: {
+                            modules: true, // 指定启用css modules
+                            localIdentName: '[name]__[local]--[hash:base64:5]' // 指定css的类名格式
+                        }
+                    }]
+                })
+                // use:  [
+                //     {
+                //         loader: 'style-loader'
+                //     },
+                //     {
+                //         loader: 'css-loader',
+                //         options: {
+                //             modules: true, // 指定启用css modules
+                //             localIdentName: '[name]__[local]--[hash:base64:5]' // 指定css的类名格式
+                //         }
+                //     }
+                // ]
+            },
+            {
+                test: /\.less$/,
+                use: ExtractTextWebpackPlugin.extract({
+                    fallback: 'style-loader',
+                    use: [{
+                        loader: 'css-loader',
+                        options: {
+                            modules: true, // 指定启用css modules
+                            localIdentName: '[name]__[local]--[hash:base64:5]' // 指定css的类名格式
+                        }
+                    }, {
+                        loader: 'less-loader',
+                        options: {
+                            modules: true, // 指定启用css modules
+                            localIdentName: '[name]__[local]--[hash:base64:5]' // 指定css的类名格式 ，只针对最外层的选择器
+                        }
+                    }]
+                })
+            },
+            {
+                test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
+                loader: 'url-loader',
+                options: {
+                    limit: 10000,
+                    name: 'img/[name].[hash:7].[ext]'
+                }
+            },
+            {
+                test: /\.(mp4|webm|ogg|mp3|wav|flac|aac)(\?.*)?$/,
+                loader: 'url-loader',
+                options: {
+                    limit: 10000,
+                    name: 'media/[name].[hash:7].[ext]'
+                }
+            },
+            {
+                test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
+                loader: 'url-loader',
+                options: {
+                    limit: 10000,
+                    name: 'fonts/[name].[hash:7].[ext]'
+                }
             }
-        },
-        {
-            test: /\.(mp4|webm|ogg|mp3|wav|flac|aac)(\?.*)?$/,
-            loader: 'url-loader',
-            options: {
-                limit: 10000,
-                name: 'media/[name].[hash:7].[ext]'
-            }
-        },
-        {
-            test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
-            loader: 'url-loader',
-            options: {
-                limit: 10000,
-                name: 'fonts/[name].[hash:7].[ext]'
-            }
-        }
         ]
     },
     optimization: {
@@ -159,10 +162,13 @@ module.exports = {
         //     threshold: 10240,
         //     minRatio: 0.8
         // }),
-        // new webpack.DllReferencePlugin({
-        //     context: __dirname,
-        //     manifest: require('./dist/js/vendors-manifest.json')
-        // }),
+
+        // DLLPlugin(在webpack.dll.config.js中使用) 和 DLLReferencePlugin 配合实现了拆分 bundles，同时还大大提升了构建的速度
+        // DllReferencePlugin插件把只有 dll 的 bundle(们)(dll-only-bundle(s)) 引用到需要的预编译的依赖。
+        new webpack.DllReferencePlugin({
+            context: __dirname,
+            manifest: require('./static/dll/vendors-manifest.json')
+        }),
         new BundleAnalyzerPlugin(),
         new UglifyJsPlugin({
             uglifyOptions: {

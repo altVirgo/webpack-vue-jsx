@@ -91,7 +91,7 @@ module.exports = {
       "beforeColon": false,
       "afterColon": true
     }],
-    "jsx-quotes": 0,
+    "jsx-quotes": 2,
     "indent": [1, 4],
     "block-scoped-var": 2, // 块语句中使用var
     "consistent-return": 2, // return 后面是否允许省略
